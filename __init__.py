@@ -61,6 +61,23 @@ class NibeUplink():
     self.response = None
     self._items = dict()
       
+  def login(self):
+   values = {'Email' : self.nibe_email,
+          'Password' : self.nibe_password,
+          'returnUrl' : ''
+        }
+
+   data = urlencode(values)
+   binary_data = data.encode('ascii')
+
+   self.opener = build_opener(
+        HTTPRedirectHandler(),
+        HTTPHandler(debuglevel=0),
+        HTTPSHandler(debuglevel=0),
+        HTTPCookieProcessor(self.cookies))
+
+   self.response = self.opener.open(self.login_url, binary_data)
+
   def run(self):
     self.alive = True
     # Log into NibeUplink
@@ -83,9 +100,9 @@ class NibeUplink():
     try:
       self.response = self.opener.open(self.login_url, binary_data)
     except HTTPError as e:
-      if e.code == 401:
-      else:
+      logger.warn('Could not login')
     else:
+      logger.warn('Logged in')
     
     self._sh.scheduler.add('NibeUplink', self._update_values, prio=5, cycle=self.nibe_update_cyle)
 
@@ -103,11 +120,10 @@ class NibeUplink():
     return None
 
   def _update_values(self):
-    logger.warn('NibeUplink: I\'ve been scheduled!')
+    self.login()
     self.response = self.opener.open(self.service_url)
     page = self.response.read()
     self.parser.feed(str(page))
-    logger.warn('NibeUplink: passed the page to parser')
     tags = self.parser.getDataArray()
     for k,v in self._items.items():
       item = self._items[k]
