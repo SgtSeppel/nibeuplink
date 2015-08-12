@@ -128,4 +128,9 @@ class NibeUplink():
     for k,v in self._items.items():
       item = self._items[k]
       value = tags[k]
-      item(float(value), 'NibeUplink')
+      try:
+        item(float(value), 'NibeUplink')
+      except:
+        logger.warn('Problem Updating value: ' + k + ':' + tags[k])
+      else:
+        logger.debug('Updated value: ' + k + ':' + tags[k])

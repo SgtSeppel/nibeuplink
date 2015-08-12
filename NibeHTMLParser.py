@@ -48,6 +48,7 @@ class NibeHTMLParser(HTMLParser):
     self.lastclass = None
     self.data = dict()
     self.regex_sz = re.compile(r'\\{1}[a-zA-Z\S]+')
+    self.regex_perc = re.compile(r'%')
 
   def handle_starttag(self, tag, attrs):
     self.inSpan = False
@@ -66,6 +67,7 @@ class NibeHTMLParser(HTMLParser):
   def handle_data(self, data):
     if self.lasttag == 'span' and self.inSpan and data.strip():
       strippedValue = re.sub(self.regex_sz, '', data)
+      strippedValue = re.sub(self.regex_perc, '', strippedValue)
       self.data[self.lastclass] =  strippedValue
 
   def getDataArray(self):
