@@ -59,7 +59,6 @@ class NibeUplink():
     self.opener = None
     self.parser = None
     self.response = None
-    self._items = dict()
       
   def login(self):
    values = {'Email' : self.nibe_email,
