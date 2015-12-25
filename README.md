@@ -1,6 +1,6 @@
 # nibeuplink
 Plugin for smarthome.py to retreive heatpump data from Nibe Uplink.
-This plugin is based on scraping the webiste to show the data. This means that there are some limitations in the availability of data. Also, this means that in case of a change to the Nibe Uplink website the plugin might have to be updated.
+This plugin is based on scraping the website to show the data. This means that there are some limitations in the availability of data. Also, this means that in case of a change to the Nibe Uplink website the plugin might have to be updated.
 
 ## Configuration
 ### plugin.conf
