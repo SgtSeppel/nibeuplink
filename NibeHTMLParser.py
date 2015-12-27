@@ -49,7 +49,7 @@ class NibeHTMLParser(HTMLParser):
     self.data = dict()
     self.regex_sz = re.compile(r'\\{1}[a-zA-Z\S]+')
     self.regex_perc = re.compile(r'%')
-    self.regex_hours = re.compile(r'h')
+    self.regex_hours = re.compile(r'h$')
 
   def handle_starttag(self, tag, attrs):
     self.inSpan = False
