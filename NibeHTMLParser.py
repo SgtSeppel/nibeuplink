@@ -51,6 +51,7 @@ class NibeHTMLParser(HTMLParser):
     self.regex_perc = re.compile(r'%')
     self.regex_hours = re.compile(r'h$')
     self.regex_gm = re.compile(r'GM$')
+    self.regex_lm = re.compile(r'l\/m$')
 
   def handle_starttag(self, tag, attrs):
     self.inSpan = False
@@ -72,6 +73,7 @@ class NibeHTMLParser(HTMLParser):
       strippedValue = re.sub(self.regex_perc, '', strippedValue)
       strippedValue = re.sub(self.regex_hours, '', strippedValue)
       strippedValue = re.sub(self.regex_gm, '', strippedValue)
+      strippedValue = re.sub(self.regex_lm, '', strippedValue)
       self.data[self.lastclass] =  strippedValue
 
   def getDataArray(self):
