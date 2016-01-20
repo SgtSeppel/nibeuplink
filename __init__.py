@@ -122,7 +122,10 @@ class NibeUplink():
     self.login()
     self.response = self.opener.open(self.service_url)
     page = self.response.read()
-    self.parser.feed(str(page))
+    try:
+      self.parser.feed(str(page))
+    except Exception as e:
+      logger.warn('Fehler:', e.args)
     tags = self.parser.getDataArray()
     for k,v in self._items.items():
       item = self._items[k]
